@@ -4,8 +4,8 @@
 
   .controller('QueryCtrl', QueryCtrl);
 
-  function QueryCtrl ($scope, $rootScope) {
-
+  function QueryCtrl ($scope, $rootScope, services) {
+    $rootScope.$on('newSubmission', (e, store) => $scope.data = store)
   }
 
 

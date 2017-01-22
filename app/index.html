@@ -7,32 +7,56 @@
   <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <h1>Upload and Query CSV Files!</h1>
     </div>
     <div class="row">
-      <div class="col-sm-6 left-panel">
-        <div class="upload-panel" ng-controller="UploadCtrl">
-          <span> Select local CSV File: </span>
-          <input type="file" id="csvFile" custom-on-change='selectFile'>
-          <button class="btn btn-primary btn-sm" ng-click="submitFile()">
-            Submit
-          </button>
-        </div>
-        <div class="query-panel" ng-controller="QueryCtrl">
+      <div class="col-sm-5 left-panel">
+        <div class="upload-panel panel panel-default" ng-controller="UploadCtrl">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Upload a CSV file
+            </h3>
+          </div>
+          <div class="panel-body">
+            <label class="btn btn-default btn-file">
+              Select Local CSV File
+              <input id="csvFile" custom-on-change='selectFile' type="file" class="hidden">
+            </label>
+            <div ng-show="fileSelected">
+              {{file.name}}
+            </div>
 
+            <button class="btn btn-primary btn-md" ng-click="submitFile()" ng-show="fileSelected">
+              Upload
+            </button>
+          </div>
+          <br/>
+        </div>
+        <div class="query-panel panel panel-default" ng-controller="QueryCtrl">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Query Object State
+            </h3>
+          </div>
+          <div class="panel-body">
+
+
+          </div>
         </div>
       </div>
-      <div class="col-sm-6 right-panel" ng-controller="DisplayCtrl">
+      <div class="col-sm-7 right-panel" ng-controller="DisplayCtrl">
 
       </div>
     </div>
   </div>
 
   <!-- Packages -->
-  <script src="node_modules/angular/angular.js"></script>
-  <script src="node_modules/papaparse/papaparse.js"></script>
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../node_modules/papaparse/papaparse.js"></script>
+  <!-- <script src="node_modules/angular/angular.js"></script> -->
+  <!-- <script src="node_modules/papaparse/papaparse.js"></script> -->
 
   <!-- Angular Scripts -->
   <script src="src/display.js"></script>

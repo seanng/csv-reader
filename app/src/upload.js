@@ -4,17 +4,15 @@
   .controller('UploadCtrl', UploadCtrl);
 
   function UploadCtrl ($scope, $rootScope, services) {
-    let file;
-    $scope.hasData = false;
 
-    const callback = (json) => {
-      $scope.hasData = true;
-      $rootScope.$emit('updateDisplay');
-      console.log('json is on upload controller', json);
+    const submitComplete = (store) => $rootScope.$broadcast('newSubmission', store);
+
+    $scope.selectFile = (evt) => {
+      $scope.file = evt.target.files[0];
+      $scope.$apply(() => $scope.fileSelected = true);
     }
 
-    $scope.selectFile = (evt) => file = evt.target.files[0];
-    $scope.submitFile = () => services.submitFile(file, callback);
+    $scope.submitFile = () => services.submitFile($scope.file, submitComplete);
 
   }
 
