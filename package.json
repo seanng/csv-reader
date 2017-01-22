@@ -1,0 +1,23 @@
+{
+  "name": "csv-reader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanng/csv-reader.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seanng/csv-reader/issues"
+  },
+  "homepage": "https://github.com/seanng/csv-reader#readme",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "papaparse": "^4.1.2"
+  }
+}
