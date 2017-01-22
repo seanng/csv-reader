@@ -6,13 +6,29 @@
 
   function QueryCtrl ($scope, $rootScope, services) {
 
-    const updateQueryList = (e, store) => {
-      console.log('submitted')
-      $scope.$apply(() => {
-        $scope.data = store;
-        console.log($scope.data)
-      } );
+    $scope.showPanel = false;
+    $scope.selectIdDropdown = false;
 
+    const updateQueryList = (e, store) => {
+      $scope.$apply(() => {
+        $scope.showPanel = true;
+        $scope.objTypes = store;
+      });
+    }
+
+    $scope.selectType = (key) => {
+      $scope.selectIdDropdown = true;
+      $scope.objIds = $scope.objTypes[key];
+    }
+
+    $scope.selectId = (key) => {
+      $scope.selectTimesDropdown = true;
+      $scope.objChanges = $scope.objIds[key];
+    }
+
+    $scope.selectTime = (index) => {
+      console.log($scope.objChanges[index]);
+      // display the data from this object.
     }
 
     $rootScope.$on('newSubmission', updateQueryList)

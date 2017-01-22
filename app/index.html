@@ -34,7 +34,7 @@
           </div>
           <br/>
         </div>
-        <div class="query-panel panel panel-default" ng-controller="QueryCtrl">
+        <div class="query-panel panel panel-default" ng-controller="QueryCtrl" ng-show="showPanel">
           <div class="panel-heading">
             <h3 class="panel-title">
               Query Object State
@@ -43,11 +43,31 @@
           <div class="panel-body">
             <div class="dropdown">
               <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown1">
-                Choose an Object Type <span class="caret"></span>
+                Choose the Object Type <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                <li ng-repeat="(key, value) in data">
-                  {{key}}
+                <li ng-repeat="(key, value) in objTypes" ng-click="selectType(key)">
+                  <a href="#">{{key}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown" ng-show="selectIdDropdown">
+              <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown2">
+                Choose the Object ID <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdown2">
+                <li ng-repeat="(key, value) in objIds" ng-click="selectId(key)">
+                  <a href="#">{{key}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown" ng-show="selectTimesDropdown">
+              <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown3">
+                Choose a Point in Time <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdown3">
+                <li ng-repeat="change in objChanges track by $index" ng-click="selectTime($index)">
+                  <a href="#">{{change.timestamp}}</a>
                 </li>
               </ul>
             </div>

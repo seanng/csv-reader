@@ -4,27 +4,8 @@
   angular.module('csvReader.services', [
   ])
   .factory('services', ($http, AppSettings) => {
-    let store = {};
 
-    // let store = {
-    //   ObjectA: {
-    //     1: [{
-  //         timestamp: 41214,
-  //         property1: 'val1',
-  //         property2: 'val2'
-  //       }, {
-  //         timestamp: 42222,
-  //         property1: 'val1',
-  //         property2: 'val2',
-  //         property3: 'val3'
-  //       }, {
-  //         timestamp: 43412,
-  //         property1: 'val4',
-  //         property2: 'val2',
-  //         property3: 'val3'
-  //       }]
-    //   }
-    // };
+    let store = {};
 
     const clone = (obj) => {
       if (null == obj || "object" != typeof obj) return obj;
