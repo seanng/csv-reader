@@ -5,12 +5,12 @@
 
   function UploadCtrl ($scope, $rootScope, services) {
 
-    const submitComplete = (store) => $rootScope.$broadcast('newSubmission', store);
-
     $scope.selectFile = (evt) => {
       $scope.file = evt.target.files[0];
       $scope.$apply(() => $scope.fileSelected = true);
     }
+
+    const submitComplete = (store) => $rootScope.$broadcast('newSubmission', store);
 
     $scope.submitFile = () => services.submitFile($scope.file, submitComplete);
 

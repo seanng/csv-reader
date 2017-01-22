@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>CSV Reader</title>
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
@@ -41,8 +41,16 @@
             </h3>
           </div>
           <div class="panel-body">
-
-
+            <div class="dropdown">
+              <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown1">
+                Choose an Object Type <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                <li ng-repeat="(key, value) in data">
+                  {{key}}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -55,6 +63,8 @@
   <!-- Packages -->
   <script src="../node_modules/angular/angular.js"></script>
   <script src="../node_modules/papaparse/papaparse.js"></script>
+  <script src="../node_modules/jquery/dist/jquery.js"></script>
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
   <!-- <script src="node_modules/angular/angular.js"></script> -->
   <!-- <script src="node_modules/papaparse/papaparse.js"></script> -->
 
