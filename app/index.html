@@ -11,72 +11,74 @@
     <div class="row">
       <h1>Upload and Query CSV Files!</h1>
     </div>
-    <div class="row">
-      <div class="col-sm-5 left-panel">
-        <div class="upload-panel panel panel-default" ng-controller="UploadCtrl">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              Upload a CSV file
-            </h3>
-          </div>
-          <div class="panel-body">
+    <div class="upload-panel panel panel-default" ng-controller="UploadCtrl">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          1. Upload a CSV file
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-4">
             <label class="btn btn-default btn-file">
-              Select Local CSV File
+              Select file...
               <input id="csvFile" custom-on-change='selectFile' type="file" class="hidden">
             </label>
-            <div ng-show="fileSelected">
-              {{file.name}}
-            </div>
-
-            <button class="btn btn-primary btn-md" ng-click="submitFile()" ng-show="fileSelected">
+          </div>
+          <div class="col-xs-5" ng-show="fileSelected">
+            {{file.name}}
+          </div>
+          <div class="col-xs-3" ng-show="fileSelected">
+            <button class="btn btn-primary " ng-click="submitFile()" ng-show="fileSelected">
               Upload
             </button>
           </div>
-          <br/>
         </div>
-        <div class="query-panel panel panel-default" ng-controller="QueryCtrl" ng-show="showPanel">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              Query Object State
-            </h3>
-          </div>
-          <div class="panel-body">
-            <div class="dropdown">
-              <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown1">
-                Choose the Object Type <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                <li ng-repeat="(key, value) in objTypes" ng-click="selectType(key)">
-                  <a href="#">{{key}}</a>
-                </li>
-              </ul>
-            </div>
-            <div class="dropdown" ng-show="selectIdDropdown">
-              <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown2">
-                Choose the Object ID <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdown2">
-                <li ng-repeat="(key, value) in objIds" ng-click="selectId(key)">
-                  <a href="#">{{key}}</a>
-                </li>
-              </ul>
-            </div>
-            <div class="dropdown" ng-show="selectTimesDropdown">
-              <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown3">
-                Choose a Point in Time <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdown3">
-                <li ng-repeat="change in objChanges track by $index" ng-click="selectTime($index)">
-                  <a href="#">{{change.timestamp}}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-7 right-panel" ng-controller="DisplayCtrl">
 
       </div>
+      <br/>
+    </div>
+    <div class="query-panel panel panel-default" ng-controller="QueryCtrl" ng-show="showPanel">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          2. Query Object State
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="dropdown col-xs-4">
+          <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown1">
+            Object Type <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdown1">
+            <li ng-repeat="(key, value) in objTypes" ng-click="selectType(key)">
+              <a href="#">{{key}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown col-xs-4" ng-show="selectIdDropdown">
+          <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown2">
+            Object ID <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdown2">
+            <li ng-repeat="(key, value) in objIds" ng-click="selectId(key)">
+              <a href="#">{{key}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown col-xs-4" ng-show="selectTimesDropdown">
+          <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown3">
+            Select Time <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdown3">
+            <li ng-repeat="change in objChanges track by $index" ng-click="selectTime($index)">
+              <a href="#">{{change.timestamp}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div ng-controller="DisplayCtrl">
+
     </div>
   </div>
 
