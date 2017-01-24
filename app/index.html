@@ -11,84 +11,84 @@
     <div class="row">
       <h1>Upload and Query CSV Files!</h1>
     </div>
-    <div class="upload-panel panel panel-default" ng-controller="UploadCtrl">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          1. Upload a CSV file
-        </h3>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-4">
-            <label class="btn btn-default btn-file">
-              Select file...
-              <input id="csvFile" custom-on-change='selectFile' type="file" class="hidden">
-            </label>
+    <div class="row all-panels">
+      <div class="col-sm-7">
+
+        <!-- UPLOAD PANEL -->
+
+        <div class="upload-panel panel panel-default" ng-controller="UploadCtrl">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Upload a CSV file
+            </h3>
           </div>
-          <div class="col-xs-5" ng-show="fileSelected">
-            {{file.name}}
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-xs-4">
+                <label class="btn btn-default btn-file">
+                  Select file...
+                  <input id="csvFile" custom-on-change='selectFile' type="file" class="hidden">
+                </label>
+              </div>
+              <div class="col-xs-5" ng-show="fileSelected">
+                {{file.name}}
+              </div>
+              <div class="col-xs-3" ng-show="fileSelected">
+                <button class="btn btn-primary " ng-click="submitFile()" ng-show="fileSelected">
+                  Upload
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-3" ng-show="fileSelected">
-            <button class="btn btn-primary " ng-click="submitFile()" ng-show="fileSelected">
-              Upload
-            </button>
-          </div>
+          <br/>
         </div>
 
-      </div>
-      <br/>
-    </div>
-    <div class="query-panel panel panel-default" ng-controller="QueryCtrl" ng-show="showPanel">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          2. Query Object State
-        </h3>
-      </div>
-      <div class="panel-body">
-        <div class="dropdown col-xs-4">
-          <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown1">
-            Object Type <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdown1">
-            <li ng-repeat="(key, value) in objTypes" ng-click="selectType(key)">
-              <a href="#">{{key}}</a>
-            </li>
-          </ul>
-        </div>
-        <div class="dropdown col-xs-4" ng-show="selectIdDropdown">
-          <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown2">
-            Object ID <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdown2">
-            <li ng-repeat="(key, value) in objIds" ng-click="selectId(key)">
-              <a href="#">{{key}}</a>
-            </li>
-          </ul>
-        </div>
-        <div class="dropdown col-xs-4" ng-show="selectTimesDropdown">
-          <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown3">
-            Select Time <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdown3">
-            <li ng-repeat="change in objChanges track by $index" ng-click="selectTime($index)">
-              <a href="#">{{change.timestamp}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div ng-controller="DisplayCtrl">
+        <!-- QUERY PANEL -->
 
+        <div class="query-panel panel panel-default" ng-controller="QueryCtrl">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              2. Query Object State
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="dropdown col-xs-3">
+              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown1">
+                Type <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                <li ng-repeat="(key, value) in objTypes" ng-click="selectType(key)">
+                  <a href="#">{{key}}</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-xs-2 input-group">
+              <input type="number" class="form-control" ng-model="query.objID" placeholder="ID">
+            </div>
+
+            <div class="col-xs-6">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DISPLAY PANEL -->
+      <div class="col-sm-5">
+        <div ng-controller="DisplayCtrl">
+
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Packages -->
+  <script src="../node_modules/moment/moment.js"></script>
   <script src="../node_modules/angular/angular.js"></script>
   <script src="../node_modules/papaparse/papaparse.js"></script>
   <script src="../node_modules/jquery/dist/jquery.js"></script>
   <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-  <!-- <script src="node_modules/angular/angular.js"></script> -->
-  <!-- <script src="node_modules/papaparse/papaparse.js"></script> -->
 
   <!-- Angular Scripts -->
   <script src="src/display.js"></script>

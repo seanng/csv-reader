@@ -1,13 +1,18 @@
 /* jshint esversion: 6 */
 (function() {
-  angular.module('csvReader.query', [])
+  angular.module('csvReader.query', [
+  ])
 
   .controller('QueryCtrl', QueryCtrl);
 
   function QueryCtrl ($scope, $rootScope, services) {
 
-    $scope.showPanel = false;
-    $scope.selectIdDropdown = false;
+    $scope.query = {
+      objType: null,
+      objId: '',
+      date: undefined,
+      time: undefined
+    }
 
     const updateQueryList = (e, store) => {
       $scope.$apply(() => {
@@ -16,20 +21,14 @@
       });
     }
 
-    $scope.selectType = (key) => {
-      $scope.selectIdDropdown = true;
-      $scope.objIds = $scope.objTypes[key];
-    }
+    $scope.selectType = (key) => $scope.query.objType = key;
 
-    $scope.selectId = (key) => {
-      $scope.selectTimesDropdown = true;
-      $scope.objChanges = $scope.objIds[key];
-    }
+    // date time picker
 
-    $scope.selectTime = (index) => {
-      console.log($scope.objChanges[index]);
-      // display the data from this object.
-    }
+
+
+
+    // $scope.submitQuery = () => services.query($scope.query);
 
     $rootScope.$on('newSubmission', updateQueryList)
 
