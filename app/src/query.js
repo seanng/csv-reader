@@ -8,7 +8,7 @@
   function QueryCtrl ($scope, $rootScope, services) {
 
     $scope.query = {
-      objType: null,
+      objType: '',
       objId: '',
       date: undefined,
       time: undefined
@@ -21,12 +21,7 @@
       });
     }
 
-    $scope.selectType = (key) => $scope.query.objType = key;
-
     // date time picker
-
-
-
 
     // $scope.submitQuery = () => services.query($scope.query);
 

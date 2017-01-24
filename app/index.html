@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>CSV Reader</title>
-  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
@@ -52,15 +52,15 @@
             </h3>
           </div>
           <div class="panel-body">
-            <div class="dropdown col-xs-3">
-              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown1">
-                Type <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                <li ng-repeat="(key, value) in objTypes" ng-click="selectType(key)">
-                  <a href="#">{{key}}</a>
-                </li>
-              </ul>
+            <div class="form-group col-xs-3">
+              <label for="selectType">Select Type:</label>
+              <select id="selectType" class="form-control" ng-model="query.objType">
+                <option
+                  ng-repeat="(key, value) in objTypes"
+                  ng-selected="{{defaultvalue == value}}">
+                  {{key}}
+                </option>
+              </select>
             </div>
 
             <div class="col-xs-2 input-group">
@@ -84,11 +84,11 @@
   </div>
 
   <!-- Packages -->
-  <script src="../node_modules/moment/moment.js"></script>
-  <script src="../node_modules/angular/angular.js"></script>
-  <script src="../node_modules/papaparse/papaparse.js"></script>
-  <script src="../node_modules/jquery/dist/jquery.js"></script>
-  <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="node_modules/moment/moment.js"></script>
+  <script src="node_modules/angular/angular.js"></script>
+  <script src="node_modules/papaparse/papaparse.js"></script>
+  <script src="node_modules/jquery/dist/jquery.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
   <!-- Angular Scripts -->
   <script src="src/display.js"></script>

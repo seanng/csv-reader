@@ -43,23 +43,23 @@
       callback(store);
     }
 
-    // const postToServer = data => {
-    //   const url = AppSettings.apiUrl+'/api',
-    //     request = { method: 'POST', url, data};
+    const postToServer = data => {
+      const url = AppSettings.apiUrl+'/api',
+        request = { method: 'POST', url, data };
 
-    //   $http(request)
-    //   .then( succ => {
-    //     console.log('post success.', succ);
-    //   })
-    //   .catch( fail => {
-    //     console.error(fail);
-    //   })
-    // }
+      $http(request)
+        .then( succ => {
+          console.log('post success.', succ);
+        })
+        .catch( fail => {
+          console.error(fail);
+        })
+    }
 
     const submitFile = (file, callback) => {
       const complete = (json) => {
-        //postToServer(json)
-        updateStore(json, callback);
+        postToServer(json)
+        // updateStore(json, callback);
       }
       Papa.parse(file, { complete, header: true })
     }
