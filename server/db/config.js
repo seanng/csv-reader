@@ -11,7 +11,8 @@ const UniqueObject = db.define('UniqueObject', {
 })
 
 const StateChange = db.define('StateChange', {
-  timeOfChange: Sequelize.INTEGER,
+  timeOfChange: Sequelize.BIGINT,
+  stateAttributes: Sequelize.STRING,
   updatedAttributes: Sequelize.STRING //stringified_object
 })
 

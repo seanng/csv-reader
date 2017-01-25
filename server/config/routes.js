@@ -1,14 +1,26 @@
-const { postHandler } = require('../db/controllers.js');
+const { postHandler, fetchHandler, queryHandler } = require('../db/controllers.js');
 
 const postData = (req, res) => {
-  postHandler(req.body, (resultsArr)=>{
-    console.log('sending back an okay status', resultsArr);
+
+  const callback = (postData) => {
+    console.log('sending back an okay status', postData);
     res.status(201).send('okay.');
-  });
+  }
+
+  return postHandler(req.body, callback);
 }
 
 const getData = (req, res) => {
-  console.log('query', req.params.query)
+
+  const callback = (data) => {
+    res.status(200).json(data)
+  }
+
+  if (req.query) {
+    return queryHandler(req.query, callback)
+  }
+
+  return fetchHandler(callback);
 }
 
 module.exports = (app, express) => {

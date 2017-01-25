@@ -8,10 +8,9 @@
   function QueryCtrl ($scope, $rootScope, services) {
 
     $scope.query = {
-      objType: '',
-      objId: '',
-      date: undefined,
-      time: undefined
+      objType: null,
+      objId: null,
+      timestamp: null
     }
 
     const updateQueryList = (e, store) => {
@@ -23,7 +22,18 @@
 
     // date time picker
 
-    // $scope.submitQuery = () => services.query($scope.query);
+    const emitWarning (key) => {
+      console.log(key, 'not defined.')
+    }
+
+    $scope.submitQuery = () => {
+      for (let key in $scope.query) {
+        if ($scope.query[key] === null) {
+          return emitWarning(key);
+        }
+      }
+      return services.queryInput($scope.query);
+    }
 
     $rootScope.$on('newSubmission', updateQueryList)
 

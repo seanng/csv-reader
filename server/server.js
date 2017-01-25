@@ -10,5 +10,6 @@ require('./config/routes.js')(app, express);
 
 app.listen(port, () => {
   console.log('Server listening on port ' + port);
-  db.sync({force: true});
+  db.sync({force:true});
+
 });
