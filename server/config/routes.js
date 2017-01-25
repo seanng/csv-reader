@@ -1,8 +1,9 @@
-const { getHandler, postHandler } = require('../db/controllers.js');
+const { postHandler } = require('../db/controllers.js');
 
 const postData = (req, res) => {
-  postHandler(req.body, ()=>{
-    res.status(201).send('okay.')
+  postHandler(req.body, (resultsArr)=>{
+    console.log('sending back an okay status', resultsArr);
+    res.status(201).send('okay.');
   });
 }
 

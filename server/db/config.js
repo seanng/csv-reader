@@ -1,6 +1,9 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize(`csvreader`, `root`);
+// ** hardcoded for the sake of convenience.
+const user = 'postgres', pass = '', host = 'localhost', port = 5432;
+
+const db = new Sequelize(`postgres://${user}:${pass}@${host}:${port}/csvreader`)
 
 const UniqueObject = db.define('UniqueObject', {
   objectType: Sequelize.STRING,
@@ -8,10 +11,11 @@ const UniqueObject = db.define('UniqueObject', {
 })
 
 const StateChange = db.define('StateChange', {
-  timestamp: Sequelize.DATE,
-  attributes: Sequelize.STRING //stringified_object
+  timeOfChange: Sequelize.INTEGER,
+  updatedAttributes: Sequelize.STRING //stringified_object
 })
 
-StateChange.belongsTo(UniqueObject, {as: 'object'})
+UniqueObject.hasMany(StateChange);
+StateChange.belongsTo(UniqueObject);
 
 module.exports = {db, UniqueObject, StateChange};
