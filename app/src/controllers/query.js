@@ -20,10 +20,14 @@
       });
     }
 
-    // date time picker
+    const emitWarning = (key, error) => {
+      if (key) return console.log(key, 'notdefined');
 
-    const emitWarning = (key) => {
-      console.log(key, 'not defined.')
+    }
+
+    const submitCallback = (error, success) => {
+      if (error) return emitWarning(null, error)
+      $rootScope.$broadcast('queried', $scope.query, success);
     }
 
     $scope.submitQuery = () => {
@@ -32,10 +36,8 @@
           return emitWarning(key);
         }
       }
-      return services.queryServer($scope.query);
+      return services.queryServer($scope.query, submitCallback);
     }
-
-    $rootScope.$on('newSubmission', updateQueryList)
 
 
   }

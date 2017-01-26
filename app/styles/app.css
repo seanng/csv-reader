@@ -1,5 +1,5 @@
 body {
-  background: #a1a1a1;
+  background: #f1fdeb;
 }
 
 .card {
@@ -9,12 +9,16 @@ body {
   padding: 10px;
   margin-top: 24px;
   margin-right: 10px;
-  border-radius: 6px;
+  border-radius: 3px;
 }
 
 h1 {
   text-align: center;
   margin-bottom: 20px;
+}
+
+h2.panel-title  {
+  font-size: 24px;
 }
 
 input[type=file] {
@@ -35,4 +39,13 @@ input[placeholder=ID] {
 
 .col-sm-5 > .card {
   height: 333px;
+}
+
+.message-body {
+  overflow: scroll;
+  max-height: 200px;
+}
+
+.error-message {
+  color: red;
 }

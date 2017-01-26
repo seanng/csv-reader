@@ -9,8 +9,10 @@
   .constant('AppSettings', {
     apiUrl: ''
   })
-  .run((services) => {
-    services.fetchData();
-  })
+  .filter("trust", ['$sce', function($sce) {
+    return function(htmlCode){
+      return $sce.trustAsHtml(htmlCode);
+    }
+  }])
 
 })();

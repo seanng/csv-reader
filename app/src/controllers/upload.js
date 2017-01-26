@@ -10,9 +10,10 @@
       $scope.$apply(() => $scope.fileSelected = true);
     }
 
-    const submitComplete = (store) => $rootScope.$broadcast('newSubmission', store);
+    const submitComplete = (data, success, response) => $rootScope.$broadcast('uploaded', data, success, response);
 
     $scope.submitFile = () => services.submitFile($scope.file, submitComplete);
+
 
   }
 

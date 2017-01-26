@@ -20,9 +20,9 @@
         <!-- UPLOAD PANEL -->
         <div class="card" ng-controller="UploadCtrl">
           <div class="panel-heading">
-            <h3 class="panel-title">
+            <h2 class="panel-title">
               Upload a CSV file
-            </h3>
+            </h2>
           </div>
           <div class="panel-body">
             <div class="row">
@@ -49,9 +49,9 @@
 
         <div class="card" ng-controller="QueryCtrl">
           <div class="panel-heading">
-            <h3 class="panel-title">
+            <h2 class="panel-title">
               Query Object State
-            </h3>
+            </h2>
           </div>
           <div class="panel-body">
             <div class="row">
@@ -81,9 +81,17 @@
       <div class="col-sm-5">
         <div ng-controller="DisplayCtrl" class="card">
           <div class="panel-heading">
-            <h3 class="panel-title">
-              Object State at:
-            </h3>
+            <h2 class="panel-title">
+              {{messageHeading}}
+            </h2>
+          </div>
+          <div class="panel-body">
+            <div ng-bind-html="messageBody | trust" ng-class="bodyClass">
+              <!-- {{messageBody}} -->
+            </div>
+            <div ng-show="queried">
+              <!-- {{objT}} -->
+            </div>
           </div>
         </div>
       </div>
@@ -99,14 +107,16 @@
 
   <!-- Services -->
   <script src="src/services/request.js"></script>
+  <script src="src/services/prettify.js"></script>
   <script src="src/services/index.js"></script>
 
+  <!-- Controllers -->
+  <script src="src/controllers/display.js"></script>
+  <script src="src/controllers/query.js"></script>
+  <script src="src/controllers/upload.js"></script>
 
-  <!-- Angular Scripts -->
-  <script src="src/display.js"></script>
+  <!-- App -->
   <script src="src/directives.js"></script>
-  <script src="src/query.js"></script>
-  <script src="src/upload.js"></script>
   <script src="src/app.js"></script>
 </body>
 
