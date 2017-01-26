@@ -14,11 +14,11 @@
 
 ## Installation
 2. `git clone` this repo
-2. `cd` into the repo and:
+2. `cd` into the repo root and:
 ```
-./setup.bash
+source database-setup.bash
 ```
 
 ## Usage
 3. start postgres server (make sure port 5432 is open)
-3. `node server`
+3. `node server` from the repo root

@@ -2,9 +2,10 @@
 (function() {
 
   angular.module('csvReader.services', [
-    'csvReader.services.request'
+    'csvReader.services.request',
+    'csvReader.services.formatter'
   ])
-  .factory('services', ($http, AppSettings, handleRequest) => {
+  .factory('services', (AppSettings, formatMessage, handleRequest) => {
 
     const postToServer = (data, callback) => {
       const url = AppSettings.apiUrl+'/api',
@@ -32,7 +33,8 @@
 
     return {
       submitFile,
-      queryServer
+      queryServer,
+      formatMessage
     };
   });
 })();

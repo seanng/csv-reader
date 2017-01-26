@@ -21,19 +21,23 @@
     }
 
     const emitWarning = (key, error) => {
+      $rootScope.$broadcast('warning', key, error);
       if (key) return console.log(key, 'notdefined');
-
+      console.error('post error:', error)
     }
 
     const submitCallback = (error, success) => {
       if (error) return emitWarning(null, error)
       $rootScope.$broadcast('queried', $scope.query, success);
+      for (let key in $scope.query) {
+        $scope.query[key] = '';
+      }
     }
 
     $scope.submitQuery = () => {
       for (let key in $scope.query) {
         if ($scope.query[key] === null) {
-          return emitWarning(key);
+          return emitWarning(key, false);
         }
       }
       return services.queryServer($scope.query, submitCallback);
