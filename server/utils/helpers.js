@@ -40,8 +40,10 @@ const getPriorChangeIndex = (states, currTimestamp) => {
   return null;
 }
 
-const findObject = (objectType, objectNumber, postRequest) => {
-  return UniqueObject.findOne({ where: { objectType, objectNumber } })
+const findObject = (objectType, objectNumber, postRequest) =>
+  UniqueObject.findOne({
+    where: { objectType, objectNumber }
+  })
   .then( obj => {
     if (!obj) {
       if (postRequest) return UniqueObject.create({objectType, objectNumber});
@@ -53,7 +55,7 @@ const findObject = (objectType, objectNumber, postRequest) => {
   .catch(err => {
     throw new Error(err);
   })
-}
+
 
 module.exports = {
   findObject,

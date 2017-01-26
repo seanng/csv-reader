@@ -11,9 +11,6 @@
         element.bind('change', onChangeHandler);
       }
     }
-
   }
-
-
 
 })();

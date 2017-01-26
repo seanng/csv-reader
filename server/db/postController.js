@@ -45,7 +45,6 @@ const updateState = (prev, next, callback, firstTime) => {
       {stateAttributes: JSON.stringify(updatedState)},
       {where: {id: next.id} })
     .then( state => {
-      console.log('i am here')
       callback(updatedState) })
   }
 }
