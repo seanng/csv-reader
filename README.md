@@ -13,7 +13,9 @@
 
 ## Usage
 
-start postgres server
+2. start postgres server
+2. git clone
+2. cd into repo and:
 
 ```
 npm install
