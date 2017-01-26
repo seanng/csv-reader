@@ -1,4 +1,5 @@
-const { postHandler, fetchHandler, queryHandler } = require('../db/controllers.js');
+const postHandler = require('../db/postController.js');
+const { fetchHandler, queryHandler } = require('../db/getController.js')
 
 const postData = (req, res) => {
 

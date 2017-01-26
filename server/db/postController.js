@@ -4,10 +4,8 @@ const findOrCreateObject = (objectType, objectNumber) => {
   return UniqueObject.findOne({ where: { objectType, objectNumber } })
   .then( obj => {
     if (!obj) {
-      console.log('obj not found?');
       return UniqueObject.create({objectType, objectNumber});
     } else {
-      console.log('object found.')
       return obj
     }
   })
@@ -16,19 +14,22 @@ const findOrCreateObject = (objectType, objectNumber) => {
   })
 }
 
+const parser = (str) => {
+  str = JSON.parse(str);
+  if (typeof str === 'string') {
+    str = JSON.parse(str);
+  }
+  return str;
+}
+
 const getCurrentState = (states, row, objId) => {
-
   let priorPos = null;
-
   for (let i = states.length-1; i >= 0; i--) {
     if (states[i].timeOfChange < row.timestamp) {
       priorPos = i;
       break;
     }
   }
-
-  // row.object_changes = row.object_changes.replace(/\\/g,"");
-
   if (priorPos === null) {
     return {
       newState: {
@@ -41,23 +42,15 @@ const getCurrentState = (states, row, objId) => {
     }
   }
 
-
   let stateAttributes = {};
-
-  let parsedPriorState = JSON.parse(JSON.parse(states[priorPos].stateAttributes));
-  console.log('parsedPriorState after ', parsedPriorState)
-
-  let parsedRowChanges = JSON.parse(JSON.parse(row.object_changes));
-  console.log('parsedRowChanges after', parsedRowChanges)
+  let parsedPriorState = parser(states[priorPos].stateAttributes);
+  let parsedRowChanges = parser(row.object_changes);
 
   for (let key in parsedPriorState) {
-    console.log('parsedpriorstate key', key);
     stateAttributes[key] = parsedPriorState[key];
   }
-  console.log('STATE ATTRIBUTES after.', stateAttributes)
 
   for (let key in parsedRowChanges) {
-    console.log('parsedrowchanges key', key);
     stateAttributes[key] = parsedRowChanges[key];
   }
 
@@ -79,50 +72,57 @@ const getObjectStates = (obj) => {
   })
 }
 
-const updateState = (prevState, currState) => {
-
-  let parsedPrevStateAttributes;
-  let attributeUpdate = {};
-
-  if (typeof (prevState.stateAttributes) !== 'object') {
-    parsedPrevStateAttributes = JSON.parse(prevState.stateAttributes);
+const getUpdatedState = (prev, next) => {
+  let newStateAttributes = {};
+  let prevAttributes = JSON.parse(prev.stateAttributes);
+  let nextAttributes = JSON.parse(next.updatedAttributes);
+  for (let key in prevAttributes) {
+    newStateAttributes[key] = prevAttributes[key];
   }
-
-  // let parsedCurrStateAttributes = JSON.parse(currState.stateAttributes);
-  let parsedCurrStateUpdatedAttributes = JSON.parse(currState.updatedAttributes);
-
-  for (let key in parsedPrevStateAttributes) {
-    attributeUpdate[key] = parsedPrevStateAttributes[key];
+  for (let key in nextAttributes) {
+    newStateAttributes[key] = nextAttributes[key];
   }
+  return JSON.stringify(newStateAttributes);
+}
 
-  console.log('attributeUpdate (after adding previous)', attributeUpdate);
-
-  for (let key in parsedCurrStateUpdatedAttributes) {
-    attributeUpdate[key] = parsedCurrStateUpdatedAttributes[key];
+const updateState = (prev, next, resolve, firstTime) => {
+  if (!firstTime) {
+    StateChange.findOne({where: { id: prev.id }})
+    .then( prevState => {
+      let updatedState = getUpdatedState(prevState, next);
+      StateChange.update(
+        {stateAttributes: updatedState},
+        {where: {id: next.id} })
+      .then( state => resolve(state) )
+    })
+  } else {
+    let updatedState = getUpdatedState(prev, next);
+    StateChange.update(
+      {stateAttributes: updatedState},
+      {where: {id: next.id} })
+    .then( state => resolve(state) )
   }
-
-  console.log('attributeUpdate (after adding updated)', attributeUpdate);
-
-  StateChange.update(
-    { stateAttributes: attributeUpdate },
-    { where: { id: currState.id } })
-  // currState.stateAttributes = JSON.parse(parsedCurrStateAttributes);
 }
 
 const updateFutureStates = (priorPos, states, newState) => {
 
-  priorPos = priorPos === null ? 0 : priorPos;
+  priorPos = priorPos === null ? -1 : priorPos;
+  let statesToUpdate = states.slice(priorPos+1);
+  let count = 0;
 
-  for (let i = priorPos; i < states.length; i++) {
-    if (i === priorPos) {
-      updateState(newState, states[i])
-    } else {
-      console.log(states[i].id, states[i].stateAttributes, states[i-1].id, 'prior')
-      updateState(states[i-1], states[i])
-      console.log(states[i].stateAttributes, 'after')
-    }
-
-  }
+  statesToUpdate.map( (state, i) => {
+    return new Promise((resolve, reject) => {
+      if (count === 0) {
+        count++;
+        return updateState(newState, state, resolve, true);
+      } else if (count < statesToUpdate.length) {
+        count++;
+        return updateState(statesToUpdate[i-1], state, resolve);
+      } else {
+        return resolve();
+      }
+    })
+  })
 }
 
 const createNewState = (newState, callback) => {
@@ -133,22 +133,27 @@ const createNewState = (newState, callback) => {
   .then( statechange => callback(statechange) )
 }
 
-const updateObject = (row, callback) => {
+const insertState = (row, callback) => {
 
   let UniqueObjectId;
 
+  // 1. Get the Object
   findOrCreateObject(row.object_type, row.object_id)
+
+  // 2. Get the Object States
   .then( obj => {
     UniqueObjectId = obj.dataValues.id;
     return getObjectStates(obj);
   })
-  .then( states => { // promisified array (supposed to be).
-    // console.log('row.', row)
+
+  // 3. Get Current State's attributes from prior State :
+  .then( states => {
     let { newState, priorPos } = getCurrentState(states, row, UniqueObjectId);
-    if (states.length - 1 > priorPos) {
-      console.log('WE SHOULD UPDATE THE FUTURE STATES HERE');
-      updateFutureStates(priorPos, states, newState);
-    }
+
+  // 4. If this wasn't the latest timestamp, then we should update all future states.
+    if (states.length > priorPos) updateFutureStates(priorPos, states, newState);
+
+  // 5. Insert the state into the DB.
     createNewState(newState, callback);
   })
   .catch(err => console.error('error in retrieve and update!', err))
@@ -160,15 +165,11 @@ const postHandler = (json, callback) => {
   json.data.reduce((promiseChain, row) => {
     return promiseChain.then(() => new Promise( resolve => {
       if (row.object_type !== '' && row.object_id !== '') {
-
-
         const resolution = (statechange) => {
-          results.push(statechange)
+          results.push(statechange);
           resolve();
         }
-
-        return updateObject(row, resolution);
-
+        return insertState(row, resolution);
       } else {
         return resolve();
       }
@@ -177,4 +178,4 @@ const postHandler = (json, callback) => {
 
 }
 
-module.exports = { postHandler, queryHandler }
+module.exports = postHandler;
