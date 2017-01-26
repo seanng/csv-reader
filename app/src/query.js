@@ -22,7 +22,7 @@
 
     // date time picker
 
-    const emitWarning (key) => {
+    const emitWarning = (key) => {
       console.log(key, 'not defined.')
     }
 
@@ -32,7 +32,7 @@
           return emitWarning(key);
         }
       }
-      return services.queryInput($scope.query);
+      return services.queryServer($scope.query);
     }
 
     $rootScope.$on('newSubmission', updateQueryList)

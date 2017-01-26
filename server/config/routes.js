@@ -13,11 +13,15 @@ const postData = (req, res) => {
 
 const getData = (req, res) => {
 
-  const callback = (data) => {
-    res.status(200).json(data)
+  const callback = (err, data) => {
+    if (err) {
+      return res.status(404).json(err);
+    }
+    console.log('dataa', data);
+    return res.status(200).json(data);
   }
 
-  if (req.query) {
+  if (Object.keys(req.query).length) {
     return queryHandler(req.query, callback)
   }
 

@@ -13,7 +13,6 @@
     </div>
     <div class="row all-panels">
       <div class="col-sm-7">
-
         <!-- UPLOAD PANEL -->
 
         <div class="upload-panel panel panel-default" ng-controller="UploadCtrl">
@@ -48,29 +47,28 @@
         <div class="query-panel panel panel-default" ng-controller="QueryCtrl">
           <div class="panel-heading">
             <h3 class="panel-title">
-              2. Query Object State
+              Query Object State
             </h3>
           </div>
           <div class="panel-body">
-            <div class="form-group col-xs-3">
-              <label for="selectType">Select Type:</label>
-              <select id="selectType" class="form-control" ng-model="query.objType">
-                <option
-                  ng-repeat="(key, value) in objTypes"
-                  ng-selected="{{defaultvalue == value}}">
-                  {{key}}
-                </option>
-              </select>
-            </div>
+            <div class="row">
+              <div class="col-xs-3">
+                <input type="text" class="form-control" ng-model="query.objType" placeholder="Obj. Type">
+              </div>
 
-            <div class="col-xs-2 input-group">
-              <input type="number" class="form-control" ng-model="query.objID" placeholder="ID">
-            </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control" ng-model="query.objId" placeholder="Obj. ID">
+              </div>
 
-            <div class="col-xs-6">
-              <button ng-click="submitQuery()" class="btn btn-default">
-                Submit
-              </button>
+              <div class="col-xs-3">
+                <input type="number" class="form-control" ng-model="query.timestamp" placeholder="Unix Timestamp">
+              </div>
+
+              <div class="col-xs-4">
+                <button ng-click="submitQuery()" class="btn btn-info">
+                  Submit
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -92,10 +90,14 @@
   <script src="node_modules/jquery/dist/jquery.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
+  <!-- Services -->
+  <script src="src/services/request.js"></script>
+  <script src="src/services/index.js"></script>
+
+
   <!-- Angular Scripts -->
   <script src="src/display.js"></script>
   <script src="src/directives.js"></script>
-  <script src="src/services.js"></script>
   <script src="src/query.js"></script>
   <script src="src/upload.js"></script>
   <script src="src/app.js"></script>

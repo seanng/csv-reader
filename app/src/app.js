@@ -1,13 +1,16 @@
 (function() {
   angular.module('csvReader', [
-    'csvReader.directives',
     'csvReader.services',
+    'csvReader.directives',
     'csvReader.upload',
     'csvReader.query',
     'csvReader.display',
   ])
   .constant('AppSettings', {
     apiUrl: ''
+  })
+  .run((services) => {
+    services.fetchData();
   })
 
 })();
