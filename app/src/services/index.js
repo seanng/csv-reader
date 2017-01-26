@@ -33,8 +33,6 @@
       const url = `${AppSettings.apiUrl}/api`,
         request = {method: 'GET', url}
 
-      console.log('fetching!!!');
-
       handleRequest(request, fetchCallback);
     }
 

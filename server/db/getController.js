@@ -9,17 +9,13 @@ const queryHandler = (query, callback) => {
     let lastState = states[getPriorChangeIndex(states, query.timestamp)];
     return callback(null, lastState)
   })
-  .catch( err => {
-    callback(err)
-  })
+  .catch( err => callback(err));
 
 }
 
 const fetchHandler = (callback) => {
   StateChange.findAll()
-  .then( states => {
-    callback(states);
-  })
+  .then( states => callback(states));
 }
 
 

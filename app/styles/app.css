@@ -1,3 +1,17 @@
+body {
+  background: #a1a1a1;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)!important;
+  background: white;
+  color: black;
+  padding: 10px;
+  margin-top: 24px;
+  margin-right: 10px;
+  border-radius: 6px;
+}
+
 h1 {
   text-align: center;
   margin-bottom: 20px;
@@ -13,4 +27,12 @@ input[placeholder=ID] {
 
 .form-control {
   padding-right: 0px;
+}
+
+.col-sm-7 > .card {
+  height: 155px;
+}
+
+.col-sm-5 > .card {
+  height: 333px;
 }

@@ -4,13 +4,8 @@
 
     const handleRequest = (request, callback) => {
       $http(request)
-      .then( response => {
-        console.log('helloooo')
-        return callback(null, response);
-      })
-      .catch( failure => {
-        return callback(failure);
-      })
+      .then( response => callback(null, response))
+      .catch( failure => callback(failure));
     }
 
     return handleRequest;
